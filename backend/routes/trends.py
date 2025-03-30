@@ -5,7 +5,7 @@ from sqlmodel import Session
 import pandas as pd
 import numpy as np
 from scipy import stats
-from dal.engine import engine
+from ..dal.engine import engine
 
 router = APIRouter(tags=["trends"])
 

@@ -1,8 +1,8 @@
 from typing import List
 from fastapi import APIRouter
 from sqlmodel import Session, select
-from dal.models.locations import Locations
-from dal.engine import engine
+from ..dal.models.locations import Locations
+from ..dal.engine import engine
 
 router = APIRouter(tags=["locations"])
 

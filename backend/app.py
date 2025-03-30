@@ -3,10 +3,10 @@ from fastapi.concurrency import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional, Dict, List
 from sqlmodel import SQLModel
-from dal.models import climate_data, metrics, locations
-from dal.engine import engine
-from routes import climate, locations, metrics, summary, trends
-from seed import create_locations_from_seed, create_metrics_from_seed, create_climate_data_from_seed
+from .dal.models import climate_data, metrics, locations
+from .dal.engine import engine
+from .routes import climate, locations, metrics, summary, trends
+from .seed import create_locations_from_seed, create_metrics_from_seed, create_climate_data_from_seed
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
