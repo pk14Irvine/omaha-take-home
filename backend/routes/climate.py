@@ -1,10 +1,10 @@
 from typing import List, Optional
 from fastapi import APIRouter
 from sqlmodel import Session, select
-from dal.engine import engine
-from dal.models.climate_data import ClimateData
-from dal.models.metrics import Metrics
-from dal.models.locations import Locations
+from ..dal.engine import engine
+from ..dal.models.climate_data import ClimateData
+from ..dal.models.metrics import Metrics
+from ..dal.models.locations import Locations
 from pydantic import BaseModel
 
 router = APIRouter(tags=["climate"])

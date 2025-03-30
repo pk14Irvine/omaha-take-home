@@ -1,8 +1,8 @@
 from typing import List
 from fastapi import APIRouter
 from sqlmodel import Session, select
-from dal.engine import engine
-from dal.models.metrics import Metrics
+from ..dal.engine import engine
+from ..dal.models.metrics import Metrics
 
 router = APIRouter(tags=["metrics"])
 
