@@ -60,7 +60,15 @@ function Filters({ locations, metrics, filters, onFilterChange, onApplyFilters }
           </select>
         </div>
 
-        {/* Existing submit button */}
+        <div className="md:col-span-2">
+          <button
+            type="submit"
+            className="w-full bg-eco-primary text-white rounded-md py-2"
+          >
+            Apply Filters
+          </button>
+        </div>
+        
       </form>
     </div>
   );

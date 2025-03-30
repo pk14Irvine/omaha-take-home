@@ -34,7 +34,7 @@ function App() {
         ...(filters.qualityThreshold && { quality_threshold: filters.qualityThreshold })
       });
 
-      let endpoint = '/api/v1/climate';
+      let endpoint = 'http://localhost:8000/api/v1/climate';
       if (filters.analysisType === 'trends') {
         endpoint = '/api/v1/trends';
       } else if (filters.analysisType === 'weighted') {
