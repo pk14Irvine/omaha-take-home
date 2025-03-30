@@ -42,3 +42,57 @@ Install package dependencies via pip declared in requirements.txt:
 The test suite leverages PyTest. To run the suite use:
 
 `pytest`
+
+## Architecture
+
+### Entity Relationship Diagram
+
+```mermaid
+erDiagram
+    LOCATIONS {
+        int ID
+        string NAME
+        string COUNTRY
+        double LATITUDE
+        double LONGITUDE
+        string REGION
+    }
+
+    METRICS {
+        int ID
+        string NAME
+        string DISPLAY_NAME
+        string UNIT
+        string DESCRIPTION
+    }
+
+    CLIMATE_DATA {
+        int ID
+        int LOCATION_ID
+        int METRIC_ID
+        date DATE
+        double VALUE
+        string QUALITY
+    }
+
+    LOCATIONS ||--o| CLIMATE_DATA : refers
+    METRICS ||--o| CLIMATE_DATA : refers
+
+```
+
+### Sequence Diagram
+
+```mermaid
+    sequenceDiagram
+        actor us as User
+        participant fe as Frontend
+        participant be as Backend
+        participant pg as Postgres
+
+        us->>fe: refresh dashboard
+        fe->>be: fetch data
+        be->>pg: query for data
+        pg-->>be: query response
+        be-->>fe: return response
+        fe-->>us: hydrate ui
+```
