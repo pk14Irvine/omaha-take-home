@@ -7,20 +7,33 @@ from .dal.models import climate_data, metrics, locations
 from .dal.engine import engine
 from .routes import climate, locations, metrics, summary, trends
 from .seed import create_locations_from_seed, create_metrics_from_seed, create_climate_data_from_seed
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+ENVIRONMENT = os.getenv("ENVIRONMENT")
+
+def load_db():
+    if ENVIRONMENT == "dev":
+        print("CREATING TABLES...") 
+        SQLModel.metadata.create_all(engine)
+        print("SEEDING DATA...")
+        create_locations_from_seed()
+        create_metrics_from_seed()
+        create_climate_data_from_seed()
+
+def drop_db():
+   if ENVIRONMENT == "dev":
+        print("DROPPING TABLES")
+        SQLModel.metadata.drop_all(engine)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("STARTING SERVER...")
-    print("CREATING TABLES...") 
-    SQLModel.metadata.create_all(engine)
-    print("SEEDING DATA...")
-    create_locations_from_seed()
-    create_metrics_from_seed()
-    create_climate_data_from_seed()
+    load_db()
     yield
+    drop_db()
     print("TERMINATING SERVER")
-    print("DROPPING TABLES")
-    SQLModel.metadata.drop_all(engine)
 
 app = FastAPI(title="EcoVision API", lifespan=lifespan)
 app.include_router(climate.router)
