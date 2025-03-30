@@ -3,6 +3,7 @@ import Filters from './components/Filters';
 import ChartContainer from './components/ChartContainer';
 import TrendAnalysis from './components/TrendAnalysis';
 import QualityIndicator from './components/QualityIndicator';
+import { getLocations, getMetrics } from './api';
 
 function App() {
   const [locations, setLocations] = useState([]);
@@ -54,6 +55,76 @@ function App() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const fetchClimateData = async () => {
+      setLoading(true);
+      try {
+        const queryParams = new URLSearchParams({
+          ...(filters.locationId && { location_id: filters.locationId }),
+          ...(filters.startDate && { start_date: filters.startDate }),
+          ...(filters.endDate && { end_date: filters.endDate }),
+          ...(filters.metric && { metric: filters.metric }),
+          ...(filters.qualityThreshold && { quality_threshold: filters.qualityThreshold }),
+        });
+        let endpoint = '/api/v1/climate';
+        if (filters.analysisType === 'trends') {
+          endpoint = '/api/v1/trends';
+        } else if (filters.analysisType === 'weighted') {
+          endpoint = '/api/v1/summary';
+        }
+
+        const response = await fetch(`http://localhost:8000${endpoint}?${queryParams}`);
+        const data = await response.json();
+
+        if (filters.analysisType === 'trends') {
+          setTrendData(data.data);
+        } else {
+          setClimateData(data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching climate data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchClimateData();
+
+    // // Fetch data when any filter changes
+    // if (filters.locationId || filters.startDate || filters.endDate || filters.metric || filters.qualityThreshold) {
+    //   fetchClimateData();
+    // }
+  }, [filters]);
+
+  // Fetch locations when component mounts
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const data = await getLocations();
+        setLocations(data);
+      } catch (error) {
+        console.error('Error fetching locations:', error);
+      }
+    };
+
+    fetchLocations();
+  }, []);
+
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const data = await getMetrics();
+        setMetrics(data);
+      } catch (error) {
+        console.error('Error fetching metrics:', error);
+      }
+    };
+
+    fetchMetrics();
+  }, [])
+
+  
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
