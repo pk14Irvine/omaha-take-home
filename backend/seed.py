@@ -1,14 +1,10 @@
 from typing import List
-
-from sqlalchemy import text
-from sqlmodel import Session
 from dal.models.locations import Locations
 from dal.models.metrics import Metrics
 from dal.models.climate_data import ClimateData
 from routes.locations import create_location
 from routes.metrics import create_metric
 from routes.climate import create_climate_data
-from dal.engine import engine
 import json
 
 SEED_FILE_NAME = "../data/sample_data.json"
