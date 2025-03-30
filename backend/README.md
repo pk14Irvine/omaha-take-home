@@ -25,6 +25,8 @@ Install package dependencies via pip declared in requirements.txt:
 
 ### 3. Server Startup
 
+Use the .env file to load environment files. If the `ENVIRONMENT` is dev, the startup script will load the seed data.
+
 #### Production Startup
 
 `fastapi run app.py`
