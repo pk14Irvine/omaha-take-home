@@ -10,12 +10,17 @@ from seed import create_locations_from_seed, create_metrics_from_seed, create_cl
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("STARTING SERVER")
+    print("STARTING SERVER...")
+    print("CREATING TABLES...") 
     SQLModel.metadata.create_all(engine)
+    print("SEEDING DATA...")
     create_locations_from_seed()
     create_metrics_from_seed()
     create_climate_data_from_seed()
     yield
+    print("TERMINATING SERVER")
+    print("DROPPING TABLES")
+    SQLModel.metadata.drop_all(engine)
 
 app = FastAPI(title="EcoVision API", lifespan=lifespan)
 app.include_router(climate.router)
