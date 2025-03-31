@@ -12,6 +12,11 @@ from .climate import QUALITY_CODES
 
 router = APIRouter(tags=["summary"])
 
+"""
+Pagination Meta Data Response
+
+TODO: PULL OUT INTO MODELS
+"""
 class ClimateResponseData(BaseModel):
     id: int
     location_id: int
@@ -24,13 +29,23 @@ class ClimateResponseData(BaseModel):
     unit: str
     quality: str
 
+"""
+Pagination Meta Data Response
+
+TODO: PULL OUT INTO MODELS
+"""
 class PaginationMetaResponse(BaseModel):
     total_count: int
     page: int
     per_page: int
 
+"""
+Paginated Data Response - Meant to be a generic wrapper for reusability
+
+TODO: PULL OUT INTO MODELS
+"""
 class PaginatedDataResponse(BaseModel):
-    data: List[ClimateResponseData]
+    data: List[ClimateResponseData] #eventually make this a union 
     meta: PaginationMetaResponse
 
 @router.get("/api/v1/summary")
@@ -47,7 +62,7 @@ def get_summary(
     
     Returns weighted min, max, and avg values for each metric in the format specified in the API docs.
     """
-    # TODO: Implement this endpoint
+    # Implement this endpoint
     # 1. Get query parameters from request.args
     # 2. Validate quality_threshold if provided
     # 3. Get list of metrics to summarize

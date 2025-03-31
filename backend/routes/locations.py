@@ -13,7 +13,7 @@ def get_locations() -> List[Locations]:
     
     Returns location data in the format specified in the API docs.
     """
-    # TODO: Implement this endpoint
+    # Implement this endpoint
     # 1. Query the locations table
     # 2. Format response according to API specification
 
@@ -23,6 +23,11 @@ def get_locations() -> List[Locations]:
 
 @router.post("/api/v1/create_location")
 def create_location(location: Locations) -> Locations:
+    """
+    Create Location entry. Also used in seeding flow.
+
+    Returns created location entry. 
+    """
     with Session(engine) as session:
         session.add(location)
         session.commit()
