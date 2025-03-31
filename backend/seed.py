@@ -16,6 +16,8 @@ locations_seed = data["locations"]
 metrics_seed = data["metrics"]
 climate_data_seeds = data["climate_data"]
 
+# Create Locations Data
+# Reuse POST endpoint logic
 def create_locations_from_seed():
     for location in locations_seed:
         seed_location = Locations(
@@ -27,6 +29,8 @@ def create_locations_from_seed():
         )
         create_location(seed_location)
 
+# Create Metrics Data
+# Reuse POST endpoint logic
 def create_metrics_from_seed():
     for metrics in metrics_seed:
         seed_metric = Metrics(
@@ -37,6 +41,8 @@ def create_metrics_from_seed():
         )
         create_metric(seed_metric)
 
+# Create Climate Data
+# Reuse POST endpoint logic
 def create_climate_data_from_seed():
     for climate_data_seed in climate_data_seeds:
         climate_data = ClimateData(

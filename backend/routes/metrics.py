@@ -13,7 +13,7 @@ def get_metrics() -> List[Metrics]:
     
     Returns metric data in the format specified in the API docs.
     """
-    # TODO: Implement this endpoint
+    # Implement this endpoint
     # 1. Query the metrics table
     # 2. Format response according to API specification
 
@@ -21,7 +21,13 @@ def get_metrics() -> List[Metrics]:
         return session.exec(select(Metrics)).all()
 
 @router.post("/api/v1/create_metric")
+
 def create_metric(metric: Metrics) -> Metrics:
+    """
+    Create Metric entry. Also used in seeding flow.
+
+    Returns created metric entry. 
+    """
     with Session(engine) as session:
         session.add(metric)
         session.commit()

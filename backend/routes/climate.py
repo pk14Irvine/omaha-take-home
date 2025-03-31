@@ -9,6 +9,11 @@ from pydantic import BaseModel
 
 router = APIRouter(tags=["climate"])
 
+"""
+Pagination Meta Data Response
+
+TODO: PULL OUT INTO MODELS
+"""
 class ClimateResponseData(BaseModel):
     id: int
     location_id: int
@@ -21,11 +26,21 @@ class ClimateResponseData(BaseModel):
     unit: str
     quality: str
 
+"""
+Pagination Meta Data Response
+
+TODO: PULL OUT INTO MODELS
+"""
 class PaginationMetaResponse(BaseModel):
     total_count: int
     page: int
     per_page: int
 
+"""
+Paginated Data Response - Meant to be a generic wrapper for reusability
+
+TODO: PULL OUT INTO MODELS
+"""
 class PaginatedDataResponse(BaseModel):
     data: List[ClimateResponseData]
     meta: PaginationMetaResponse
@@ -46,7 +61,7 @@ def get_climate_data(
     
     Returns climate data in the format specified in the API docs.
     """
-    # TODO: Implement this endpoint
+    # Implement this endpoint
     # 1. Get query parameters from request.args
     # 2. Validate quality_threshold if provided
     # 3. Build and execute SQL query with proper JOINs and filtering
@@ -115,6 +130,11 @@ def get_climate_data(
 
 @router.post("/api/v1/create_climate")
 def create_climate_data(climate: ClimateData) -> ClimateData:
+    """
+    Create Climate Data entry. Also used in seeding flow.
+
+    Returns created climate data entry. 
+    """
     with Session(engine) as session:
         session.add(climate)        
         session.commit()

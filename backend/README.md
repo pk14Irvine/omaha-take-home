@@ -172,15 +172,19 @@ erDiagram
 
 ## Improvements
 
-1. Schema Improvements:
+1. Fix trends route data frame
+
+2. Pagination on the endpoints
+
+3. Schema Improvements:
 
 - Pull out quality threshold into it's own table and introduce and index value.
 - Introduce indexes around name and common join points
 
-2. Write more Unit Tests:
+3. Write more Unit Tests:
 
 - The PyTest integration is started and the base route is being tested but more unit tests can be added
 
-3. Leverage async more in the APIs
+4. Leverage async more in the APIs
 
 - Concurrent requests can be handled better since this application is proxying a lot of requests to the DB.
