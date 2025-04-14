@@ -1,4 +1,5 @@
 from typing import Optional
+from pydantic import BaseModel
 from sqlmodel import SQLModel, Field, Relationship
 from sqlalchemy import VARCHAR, DATE, DOUBLE_PRECISION
 
@@ -23,3 +24,30 @@ class ClimateData(SQLModel, table=True):
     value: float
     quality: str
     quality_weight: float = Field(index = True)
+
+
+class ClimateResponseData(BaseModel):
+    id: int
+    location_id: int
+    location_name: str
+    latitude: float
+    date: str
+    metric: str
+    value: float
+    unit: str
+    quality: str
+
+class Distributions(BaseModel):
+    poor: float
+    questionable: float
+    good: float
+    excellent: float
+
+class ClimateSummary(BaseModel):
+    name: str
+    min: float
+    max: float
+    avg: float
+    weighted_avg: float
+    unit: str
+    quality_distributions: Distributions
