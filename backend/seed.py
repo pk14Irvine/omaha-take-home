@@ -12,6 +12,13 @@ SEED_FILE_NAME = "../data/sample_data.json"
 with open(SEED_FILE_NAME, 'r') as file:
     data = json.load(file)
 
+QUALITY_WEIGHTS = {
+    'excellent': 1.0,
+    'good': 0.8,
+    'questionable': 0.5,
+    'poor': 0.3
+}
+
 locations_seed = data["locations"]
 metrics_seed = data["metrics"]
 climate_data_seeds = data["climate_data"]
@@ -50,6 +57,7 @@ def create_climate_data_from_seed():
             metric_id=climate_data_seed["metric_id"],
             date=climate_data_seed["date"],
             value=climate_data_seed["value"],
-            quality=climate_data_seed["quality"]
+            quality=climate_data_seed["quality"],
+            quality_weight = QUALITY_WEIGHTS[climate_data_seed["quality"]]
         )
         create_climate_data(climate_data)

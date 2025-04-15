@@ -1,4 +1,5 @@
 from typing import Optional
+from pydantic import BaseModel
 from sqlmodel import SQLModel, Field, Relationship
 from sqlalchemy import VARCHAR, DATE, DOUBLE_PRECISION
 
@@ -17,8 +18,36 @@ CREATE TABLE IF NOT EXISTS CLIMATEDATA (
 """
 class ClimateData(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    location_id: int = Field(foreign_key="locations.id", nullable=False)
-    metric_id: int = Field(foreign_key="metrics.id", nullable=False)
-    date: str = Field(sa_column=DATE)
+    location_id: int = Field(foreign_key="locations.id", nullable=False, index = True)
+    metric_id: int = Field(foreign_key="metrics.id", nullable=False, index = True)
+    date: str = Field(index = True)
     value: float
     quality: str
+    quality_weight: float = Field(index = True)
+
+
+class ClimateResponseData(BaseModel):
+    id: int
+    location_id: int
+    location_name: str
+    latitude: float
+    date: str
+    metric: str
+    value: float
+    unit: str
+    quality: str
+
+class Distributions(BaseModel):
+    poor: float
+    questionable: float
+    good: float
+    excellent: float
+
+class ClimateSummary(BaseModel):
+    name: str
+    min: float
+    max: float
+    avg: float
+    weighted_avg: float
+    unit: str
+    quality_distributions: Distributions
